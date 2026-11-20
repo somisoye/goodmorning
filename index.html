@@ -1259,8 +1259,12 @@
       let newTile = false;
       if (!log.reward) {
         log.reward = true;
-        const idx = state.tiles.indexOf(false);
-        if (idx >= 0) { state.tiles[idx] = true; newTile = true; }
+        const closed = [];
+        for (let i = 0; i < state.tiles.length; i++) if (!state.tiles[i]) closed.push(i);
+        if (closed.length) {
+          const idx = closed[Math.floor(Math.random() * closed.length)];
+          state.tiles[idx] = true; newTile = true;
+        }
       }
       save(); render();
       chime(true); confetti();
